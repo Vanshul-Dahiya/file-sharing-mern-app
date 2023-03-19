@@ -7,6 +7,7 @@ function App() {
     "https://i.pinimg.com/originals/16/46/24/1646243661201a0892cc4b1a64fcbacf.jpg";
 
   const [file, setFile] = useState("");
+  const [result, setResult] = useState("");
 
   const fileInputRef = useRef();
 
@@ -17,14 +18,15 @@ function App() {
   // after a file is picked , api call using useEffect
   useEffect(() => {
     // when value of file is changed it will work at that time
-    const getImage = () => {
+    const getImage = async () => {
       if (file) {
         const data = new FormData();
         data.append("name", file.name);
         data.append("file", file);
 
         // api call
-        uploadFile(data);
+        let response = await uploadFile(data);
+        setResult(response.path);
       }
     };
     getImage();
@@ -40,8 +42,7 @@ function App() {
             onUploadClick();
           }}
         >
-          {" "}
-          Upload{" "}
+          Upload
         </button>
         {/* pick a file using input and store it using useState */}
         <input
@@ -50,6 +51,9 @@ function App() {
           style={{ display: "none" }}
           onChange={(e) => setFile(e.target.files[0])}
         />
+        <a href={result} target="_blank">
+          {result}
+        </a>
       </div>
     </div>
   );
