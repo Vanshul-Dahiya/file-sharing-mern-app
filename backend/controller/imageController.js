@@ -10,7 +10,9 @@ export const uploadImage = async (req, res) => {
     const file = await File.create(fileObj);
     return res
       .status(200)
-      .json({ path: `http://localhost:8000/file/${file._id}` });
+      .json({
+        path: `https://file-sharing-backend-ljuk.onrender.com/file/${file._id}`,
+      });
   } catch (error) {
     console.log("error while uploading image ", error);
     res.status(500).json({ error: error.message });
